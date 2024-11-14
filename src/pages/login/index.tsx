@@ -1,16 +1,37 @@
+import { CompanyLogo } from "@/assets";
+import { LOCAL_STORAGE_KEYS } from "@/constant";
+import { useLocalStorage } from "@/hooks";
 import { Card, Flex, Image, Space } from "antd";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { LoginForm } from "./components";
 import useStyles from "./styles";
-import Logo from "@/assets/company-logo.png";
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
+
   const { styles } = useStyles();
+
+  const { retrieveItem } = useLocalStorage();
+
+  useEffect(() => {
+    const dataUser = retrieveItem(LOCAL_STORAGE_KEYS.USER);
+
+    if (dataUser) {
+      navigate("/stock-movement", { replace: true });
+    }
+  }, []);
 
   return (
     <Flex align="center" justify="center" className={styles["login-container"]}>
       <Card className={styles["card-container"]}>
         <Flex gap={"0.5em"} align="center" vertical>
-          <Image src={Logo} width={"24em"} alt="Company Logo" preview={false} />
+          <Image
+            src={CompanyLogo}
+            width={"24em"}
+            alt="Company Logo"
+            preview={false}
+          />
           <h1>PT. Giri Mas Indah</h1>
           <h3>Masuk dengan akun Anda</h3>
           <LoginForm />

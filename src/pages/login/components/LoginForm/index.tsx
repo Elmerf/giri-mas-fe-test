@@ -1,10 +1,9 @@
+import { LOCAL_STORAGE_KEYS } from "@/constant";
+import { useAuth, useLocalStorage, useMessageWrapper } from "@/hooks";
 import { Button, Form, Input } from "antd";
 import { useState } from "react";
-
-import useAuth from "@/hooks/useAuth";
-import useMessageWrapper from "@/hooks/useMessagaWrapper";
-import useStyles from "./styles";
 import { useNavigate } from "react-router-dom";
+import useStyles from "./styles";
 
 type LoginFormFields = {
   username: string;
@@ -18,6 +17,7 @@ const LoginForm: React.FC = () => {
 
   const { authenticate } = useAuth();
   const { messageApi, contextHolder } = useMessageWrapper();
+  const { setItem } = useLocalStorage();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -29,7 +29,8 @@ const LoginForm: React.FC = () => {
     const data = await authenticate({ username, password });
 
     if (data) {
-      navigate("/stock-movement");
+      setItem(LOCAL_STORAGE_KEYS.USER, JSON.stringify(data));
+      navigate("/stock-movement", { replace: true });
     } else {
       messageApi.error("username atau password salah!");
     }

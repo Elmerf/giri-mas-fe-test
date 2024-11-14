@@ -1,6 +1,11 @@
+import LOCAL_STORAGE_KEYS from "@/constant/localStorage";
 import USERS from "@/mocks/user";
+import { useNavigate } from "react-router-dom";
+import useLocalStorage from "./useLocalStorage";
 
 const useAuth = () => {
+  const navigate = useNavigate();
+  const { removeItem } = useLocalStorage();
   // simulate authentication
   const authenticate = ({
     username,
@@ -24,9 +29,16 @@ const useAuth = () => {
     );
   };
 
-  const isAuthenticated = () => {};
+  const signOut = () => {
+    removeItem(LOCAL_STORAGE_KEYS.USER);
+    navigate("/login");
+  };
 
-  return { authenticate, isAuthenticated };
+  const isAuthenticated = () => {
+    return !!localStorage.getItem(LOCAL_STORAGE_KEYS.USER);
+  };
+
+  return { authenticate, signOut, isAuthenticated };
 };
 
 export default useAuth;
