@@ -28,6 +28,38 @@ export type TaskFields = {
   assignedTo: string;
   itemList: ItemList;
 };
+
+type TaskList = {
+  key: React.Key;
+  taskNumber: string;
+  assignedTo: string;
+  itemName: string;
+  totalLocation: number;
+};
+
+const taskListColumns = [
+  {
+    title: "Task No",
+    dataIndex: "taskNumber",
+    key: "taskNumber",
+  },
+  {
+    title: "Assigned To",
+    dataIndex: "assignedTo",
+    key: "assignedTo",
+  },
+  {
+    title: "Item Name",
+    dataIndex: "itemName",
+    key: "itemName",
+  },
+  {
+    title: "Total Location",
+    dataIndex: "totalLocation",
+    key: "totalLocation",
+  },
+];
+
 const generateTaskNumber = () => {
   const now = new Date();
   const datePart = now.toISOString().slice(0, 10).replace(/-/g, "");
@@ -53,6 +85,8 @@ const PageContent: React.FC = () => {
   const [isItemListOpen, setIsItemListOpen] = useState(false);
   const [isLocationListOpen, setIsLocationListOpen] = useState(false);
   const [selectedItemId, setSelectedItemId] = useState<React.Key>("");
+
+  const [taskList, setTaskList] = useState<TaskList[]>([]);
 
   const onClickAddNewTask = () => {
     setIsAddingNewTask(true);
@@ -127,6 +161,43 @@ const PageContent: React.FC = () => {
         setCount((prev) => prev + 1);
       },
     });
+  };
+
+  const handleGenerateTask = () => {
+    if (!form.getFieldValue("assignedTo")) {
+      return messageApi.error("Karyawan belum dipilih");
+    }
+    if (!form.getFieldValue("itemList")?.length) {
+      return messageApi.error("Tidak ada barang yang dipilih");
+    }
+    if (
+      form.getFieldValue("itemList")?.some((item: any) => !item.locationList)
+    ) {
+      return messageApi.error("Belum semua barang memiliki lokasi");
+    }
+
+    setTaskList((prev) => [
+      ...prev,
+      {
+        key: prev.length,
+        taskNumber: form.getFieldValue("taskNumber"),
+        assignedTo: form.getFieldValue("assignedTo"),
+        itemName: form
+          .getFieldValue("itemList")
+          .map((item: any) => item.namaBarang)
+          .join(", "),
+        totalLocation: form
+          .getFieldValue("itemList")
+          .reduce(
+            (acc: number, item: any) => acc + item.locationList.length,
+            0
+          ),
+      },
+    ]);
+
+    form.resetFields(["taskNumber", "assignedTo", "itemList"]);
+
+    messageApi.success("Task berhasil dibuat");
   };
 
   const renderAddNewItemButton = () => {
@@ -320,7 +391,7 @@ const PageContent: React.FC = () => {
               <Button type="default" onClick={onClickCancelAddNewTask}>
                 Batal
               </Button>
-              <Button type="primary" disabled>
+              <Button type="primary" onClick={handleGenerateTask}>
                 Generate Task
               </Button>
             </Flex>
@@ -336,7 +407,7 @@ const PageContent: React.FC = () => {
       )}
 
       <h2>Daftar Task</h2>
-      <span>To be Implemented</span>
+      <Table<TaskList> dataSource={taskList} columns={taskListColumns} />
     </Flex>
   );
 };
