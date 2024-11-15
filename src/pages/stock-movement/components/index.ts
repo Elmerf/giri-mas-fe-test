@@ -1,3 +1,5 @@
+import PageContent from "./PageContent";
 import PageHeader from "./PageHeader";
+import PageLocation from "./PageLocation";
 
-export { PageHeader };
+export { PageContent, PageHeader, PageLocation };

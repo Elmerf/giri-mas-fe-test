@@ -1,8 +1,8 @@
 import { useAuth } from "@/hooks";
-import { Layout } from "antd";
+import { Flex, Layout } from "antd";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { PageHeader } from "./components";
+import { PageContent, PageHeader, PageLocation } from "./components";
 import useStyles from "./styles";
 
 const StockMovement: React.FC = () => {
@@ -17,11 +17,16 @@ const StockMovement: React.FC = () => {
   }, []);
 
   return (
-    <Layout>
+    <Layout className={styles["layout-container"]}>
       <Layout.Header className={styles["header-container"]}>
         <PageHeader />
       </Layout.Header>
-      <Layout.Content></Layout.Content>
+      <Layout.Content className={styles["content-container"]}>
+        <Flex vertical flex={1}>
+          <PageLocation />
+          <PageContent />
+        </Flex>
+      </Layout.Content>
     </Layout>
   );
 };
