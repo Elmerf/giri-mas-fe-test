@@ -1,50 +1,12 @@
-# React + TypeScript + Vite
+# Giri Mas FE Test oleh Elmer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+ Proyek ini menggunakan React 18 dan NodeJS 18 sebagai tech stack-nya. Untuk mempermudah pengembangan, kami menggunakan Vite sebagai bundler dan Ant Design sebagai library UI.
 
-Currently, two official plugins are available:
+## Menjalankan App
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Anda dapat mengikuti langkah-langkah berikut untuk menginstall proyek ini:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. Pastikan Anda memiliki Node.js versi 18 atau yang lebih baru terinstall di komputer Anda.
+2. Clone proyek dan masuk ke dalam direktori.
+3. Jalankan perintah `npm install` atau `yarn` untuk menginstall semua dependensi proyek.
+4. Setelah selesai, Anda dapat menjalankan proyek dengan perintah `npm start` atau `yarn start`.

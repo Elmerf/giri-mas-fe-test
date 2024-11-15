@@ -16,7 +16,7 @@ import {
 import { useForm } from "antd/es/form/Form";
 import { useEffect, useState } from "react";
 import ItemList, { itemColumns } from "./ItemList";
-import LocationList, { columns as locationColumns } from "./LocationList";
+import LocationList from "./LocationList";
 import useStyles from "./styles";
 import { LocationType } from "@/mocks/location";
 import USERS from "@/mocks/user";
